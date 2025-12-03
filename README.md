@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Interview Copilot 🧠
 
-## Getting Started
+**Interview Copilot** is an AI-powered assistant designed to help you ace your technical interviews. It listens to your interview in real-time, analyzes the context against your resume, and provides smart, concise suggestions to help you answer difficult questions.
 
-First, run the development server:
+![Interview Copilot](https://placehold.co/1200x630/06b6d4/000000?text=Interview+Copilot)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*   **Real-time Transcription**: Captures both your voice and the interviewer's audio.
+*   **AI Brain**: Powered by Google Gemini 1.5 Flash for instant, context-aware answers.
+*   **Resume Integration**: Upload your resume (PDF/TXT) to get personalized answers based on your experience.
+*   **Manual Context**: Type specific questions or job descriptions to guide the AI.
+*   **Mic-Only Mode**: "Ask AI Now" works with just the microphone—no screen share required.
+*   **Smart Rate Limiting**: Optimizes API usage to stay within free tier limits.
+*   **Privacy First**: Your API key is stored locally in your browser/env.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+*   **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+*   **Language**: TypeScript
+*   **Styling**: Tailwind CSS
+*   **AI**: Google Gemini API
+*   **State Management**: Zustand
+*   **PDF Parsing**: PDF.js
 
-## Learn More
+## 🏃‍♂️ Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/yourusername/interview-copilot.git
+    cd interview-copilot
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3.  **Set up Environment Variables**:
+    Create a `.env.local` file in the root directory and add your Gemini API key:
+    ```env
+    NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+    ```
 
-## Deploy on Vercel
+4.  **Run the development server**:
+    ```bash
+    npm run dev -- --webpack
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5.  **Open the app**:
+    Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📦 Deployment
+
+This project is optimized for deployment on **Vercel**.
+
+1.  Push your code to a GitHub repository.
+2.  Import the project in Vercel.
+3.  Add the `NEXT_PUBLIC_GEMINI_API_KEY` in the Vercel Project Settings > Environment Variables.
+4.  Deploy!
+
+## 📄 License
+
+MIT License - see the [LICENSE](LICENSE) file for details.
