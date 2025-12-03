@@ -104,7 +104,7 @@ export default function Home() {
     <main className="h-[100dvh] overflow-hidden text-neutral-200 font-sans flex flex-col pt-20 lg:pt-24 px-4 lg:px-6 pb-24 lg:pb-6 gap-4 lg:gap-8 selection:bg-cyan-500/30">
       {/* Header */}
       {/* Premium Glass Header */}
-      <header className="fixed top-0 left-0 right-0 h-16 lg:h-20 z-50 flex items-center justify-between px-4 lg:px-10 bg-black/40 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 h-16 lg:h-20 z-50 flex items-center justify-between px-4 lg:px-10 glass-panel border-b-0 rounded-b-2xl lg:rounded-b-none lg:border-b lg:border-white/5 transition-all duration-300">
 
         {/* Logo Section */}
         <div className="flex items-center gap-3 group cursor-pointer">
@@ -204,10 +204,7 @@ export default function Home() {
             </div>
           )}
 
-          {/* Upgrade Button */}
-          <button className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 hover:border-amber-500/50 hover:from-amber-500/20 hover:to-orange-500/20 transition-all duration-300 group">
-            <span className="text-xs font-bold text-amber-500 tracking-wide uppercase group-hover:text-amber-400 transition-colors">Upgrade to Pro</span>
-          </button>
+
 
           {/* User Profile */}
           <div className="pl-2 border-l border-white/10">
@@ -227,7 +224,7 @@ export default function Home() {
 
         {/* Left: Transcript */}
         <div className={clsx(
-          "flex-col gap-4 bg-black/20 rounded-3xl p-4 lg:p-6 border border-white/5 backdrop-blur-2xl transition-all duration-300 relative overflow-hidden shadow-2xl shadow-black/50",
+          "flex-col gap-4 glass-panel rounded-3xl p-4 lg:p-6 transition-all duration-300 relative overflow-hidden",
           activeTab === 'transcript' ? "flex flex-1" : "hidden lg:flex"
         )}>
           <div className="flex items-center justify-between">
@@ -256,14 +253,14 @@ export default function Home() {
           </div>
 
           {/* Manual Context Input */}
-          <div className="mt-auto pt-4 border-t border-neutral-800">
-            <label className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2 block">
+          <div className="mt-auto pt-4 border-t border-white/5">
+            <label className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-3 block pl-1">
               Manual Context / Specific Question
             </label>
             <div className="relative group">
               <textarea
-                placeholder="Type a question..."
-                className="w-full bg-neutral-950/50 text-neutral-300 text-sm p-3 pr-12 rounded-xl border border-neutral-800 focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 focus:outline-none resize-none h-12 lg:h-24 transition-all placeholder:text-neutral-600"
+                placeholder="Type a question or paste context..."
+                className="w-full bg-black/40 text-neutral-200 text-sm p-4 pr-14 rounded-2xl border border-white/10 focus:border-cyan-500/50 focus:bg-black/60 focus:outline-none resize-none h-24 transition-all placeholder:text-neutral-600 backdrop-blur-md shadow-inner"
                 value={manualContext}
                 onChange={(e) => setManualContext(e.target.value)}
                 onKeyDown={(e) => {
@@ -278,7 +275,7 @@ export default function Home() {
                   }
                 }}
               />
-              <div className="absolute bottom-1.5 right-1.5 flex gap-2">
+              <div className="absolute bottom-3 right-3 flex gap-2">
                 <button
                   onClick={() => {
                     if (manualContext.trim()) {
@@ -289,7 +286,7 @@ export default function Home() {
                     }
                   }}
                   disabled={!manualContext.trim()}
-                  className="bg-cyan-500 text-black p-2 rounded-lg hover:bg-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-[0_0_10px_rgba(6,182,212,0.3)]"
+                  className="bg-cyan-500/10 hover:bg-cyan-500 text-cyan-500 hover:text-black border border-cyan-500/20 hover:border-cyan-500 p-2 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 backdrop-blur-md"
                 >
                   <Sparkles className="w-4 h-4 fill-current" />
                 </button>
@@ -300,7 +297,7 @@ export default function Home() {
 
         {/* Right: AI Brain */}
         <div className={clsx(
-          "flex-col gap-4 bg-black/20 rounded-3xl p-4 lg:p-6 border border-white/5 backdrop-blur-2xl relative overflow-hidden transition-all duration-300 shadow-2xl shadow-black/50",
+          "flex-col gap-4 glass-panel rounded-3xl p-4 lg:p-6 relative overflow-hidden transition-all duration-300",
           activeTab === 'ai' ? "flex flex-1" : "hidden lg:flex"
         )}>
           {/* Background Glow */}
@@ -321,7 +318,7 @@ export default function Home() {
 
             {/* History Items */}
             {aiHistory.map((item, index) => (
-              <div key={index} className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 shadow-lg group hover:bg-white/[0.04] transition-colors">
+              <div key={index} className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 shadow-sm group hover:bg-white/[0.04] transition-colors">
                 <div className="flex items-center justify-between mb-3 pb-3 border-b border-white/5">
                   <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider">
                     Answered at {new Date(item.timestamp).toLocaleTimeString()}
@@ -394,7 +391,7 @@ export default function Home() {
 
       {/* Sticky Mobile Controls */}
       {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 h-20 bg-neutral-950/90 backdrop-blur-xl border-t border-white/10 lg:hidden z-50 flex items-center justify-around px-6 pb-2">
+      <div className="fixed bottom-0 left-0 right-0 h-20 glass-panel border-t border-white/10 lg:hidden z-50 flex items-center justify-around px-6 pb-2 rounded-t-3xl border-x-0 border-b-0">
 
         {/* Transcript Tab */}
         <button
