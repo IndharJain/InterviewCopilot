@@ -1,26 +1,26 @@
-# � URGENT: Netlify Environment Variables Still Missing
+# 🚨 CRITICAL: Next.js Version Issue
 
-The build logs show that the **Clerk Publishable Key is still missing** during the build process.
+I noticed your project is using `next: 16.0.7`.
+**Next.js 16 does not exist yet.** The latest stable version is Next.js 15.
 
-Even though you might have added them, they might not be applied to the **Build** scope or the **Deploy** hasn't picked them up.
+This might be causing weird build issues or compatibility problems with Netlify and Clerk.
 
-## 🛠️ Troubleshooting Steps
+## ✅ Recommended Fix
 
-1.  **Verify Variable Names (Check for typos)**
-    *   `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` (Must start with `pk_...`)
-    *   `CLERK_SECRET_KEY` (Must start with `sk_...`)
+1.  **Downgrade to Next.js 15 (Stable)**
+    Run this command in your terminal:
+    ```bash
+    npm install next@latest react@latest react-dom@latest eslint-config-next@latest
+    ```
+    (Note: `next@latest` currently points to 15.x).
 
-2.  **Verify Scope**
-    *   In Netlify -> Site configuration -> Environment variables.
-    *   Click on the variable name.
-    *   Ensure **Scopes** is set to **"All scopes"** (Build, Runtime, etc.).
+2.  **Update Netlify Build Settings**
+    *   Ensure your **Build Command** is `npm run build`.
+    *   Ensure your **Publish Directory** is `.next`.
 
-3.  **Hard Refresh Deploy**
-    *   Go to **Deploys**.
-    *   Click **Trigger deploy** -> **Clear cache and deploy site**.
+3.  **Re-Verify Environment Variables**
+    *   `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+    *   `CLERK_SECRET_KEY`
+    *   Set to **All scopes**.
 
-## ⚠️ If it still fails...
-It is possible the key value itself is invalid or copied with whitespace.
-*   Check the value in Netlify. Make sure there are no spaces at the start or end.
-
-I have updated the code to explicitly look for the key, which might help debug if it's a binding issue.
+4.  **Trigger Deploy**
