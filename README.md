@@ -52,12 +52,17 @@
 
 ## 📦 Deployment
 
-This project is optimized for deployment on **Vercel**.
+This project is optimized for deployment on **GitHub Pages** using GitHub Actions.
 
 1.  Push your code to a GitHub repository.
-2.  Import the project in Vercel.
-3.  Add the `NEXT_PUBLIC_GEMINI_API_KEY` in the Vercel Project Settings > Environment Variables.
-4.  Deploy!
+2.  Enable GitHub Pages in your repository Settings > Pages > Set source to "GitHub Actions".
+3.  Add the required secrets in Settings > Secrets and variables > Actions:
+    - `NEXT_PUBLIC_GEMINI_API_KEY`
+    - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+    - `CLERK_SECRET_KEY`
+4.  Push to the `main` branch and the deployment will happen automatically!
+
+For detailed instructions, see [DEPLOY.md](DEPLOY.md).
 
 ## 📄 License
 
