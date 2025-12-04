@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { AudioManager } from '@/components/AudioManager';
@@ -10,7 +12,6 @@ import { Tooltip } from '@/components/Tooltip';
 import { Mic, MicOff, Play, Square, Cpu, Sparkles, MessageSquareText, Bot, Settings, Menu, Copy, Check, Sun, Moon } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import clsx from 'clsx';
-import { UserButton, useUser } from "@clerk/nextjs";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -57,7 +58,6 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
 };
 
 export default function Home() {
-  const { user } = useUser();
   const { isRecording, setRecording, isMicOn, setMicOn, transcript, addTranscript, suggestions, resumeText, setResumeText, manualContext, setManualContext, aiHistory, isStreaming, theme, toggleTheme } = useStore();
   const [activeTab, setActiveTab] = useState<'transcript' | 'ai'>('transcript');
   const aiContainerRef = useRef<HTMLDivElement>(null);
@@ -211,27 +211,15 @@ export default function Home() {
           >
             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-          {/* API Key Input (For Non-Admins) */}
-          {user?.primaryEmailAddress?.emailAddress !== 'indharjain@gmail.com' && (
-            <div className="hidden md:flex items-center gap-2">
-              <input
-                type="password"
-                placeholder="Enter Gemini API Key"
-                className="bg-input-bg border border-input-border rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:border-cyan-500 w-40 placeholder:text-muted"
-                onChange={(e) => useStore.getState().setUserApiKey(e.target.value)}
-              />
-            </div>
-          )}
 
-
-
-          {/* User Profile */}
-          <div className="pl-2 border-l border-glass-border">
-            <UserButton afterSignOutUrl="/" appearance={{
-              elements: {
-                avatarBox: "w-9 h-9 border-2 border-glass-border hover:border-cyan-500/50 transition-colors"
-              }
-            }} />
+          {/* API Key Input */}
+          <div className="flex items-center gap-2">
+            <input
+              type="password"
+              placeholder="Enter Gemini API Key"
+              className="bg-input-bg border border-input-border rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:border-cyan-500 w-40 placeholder:text-muted"
+              onChange={(e) => useStore.getState().setUserApiKey(e.target.value)}
+            />
           </div>
         </div>
       </header>

@@ -3,10 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useStore } from '@/lib/store';
 import { generateAnswer } from '@/lib/gemini';
-import { useUser } from "@clerk/nextjs";
 
 export function Brain() {
-    const { user } = useUser();
     const { isRecording, transcript, suggestions, setSuggestions, appendSuggestion, resumeText, manualContext, triggerAI, userApiKey, addToHistory } = useStore();
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -87,22 +85,12 @@ export function Brain() {
             return;
         }
 
-        // Determine API Key
-        const userEmail = user?.primaryEmailAddress?.emailAddress;
-        const isAdmin = userEmail === 'indharjain@gmail.com';
-        const effectiveApiKey = isAdmin ? process.env.NEXT_PUBLIC_GEMINI_API_KEY : userApiKey;
-
-        console.log("[Brain] Debug:", {
-            userEmail,
-            isAdmin,
-            hasEnvKey: !!process.env.NEXT_PUBLIC_GEMINI_API_KEY,
-            hasUserKey: !!userApiKey,
-            usingKey: isAdmin ? 'Env Key' : 'User Key'
-        });
+        // Use user-provided API key or environment variable as fallback
+        const effectiveApiKey = userApiKey || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
         if (!effectiveApiKey) {
             console.warn("No API Key available");
-            appendSuggestion("⚠️ Please enter your Gemini API Key in Settings to start.");
+            appendSuggestion("⚠️ Please enter your Gemini API Key to start.");
             return;
         }
 
@@ -169,7 +157,7 @@ export function Brain() {
             console.log("Triggering AI (No Audio)...");
             await handleAIResponse(null);
         }
-    }, [isRecording, transcript, resumeText, manualContext, suggestions, setSuggestions, appendSuggestion, lastAnalyzedText, triggerAI, user, userApiKey, addToHistory]);
+    }, [isRecording, transcript, resumeText, manualContext, suggestions, setSuggestions, appendSuggestion, lastAnalyzedText, triggerAI, userApiKey, addToHistory]);
 
     // Auto-trigger every 20 seconds
     useEffect(() => {
