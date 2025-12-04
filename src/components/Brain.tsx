@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useStore } from '@/lib/store';
 import { generateAnswer } from '@/lib/gemini';
 import { DEFAULT_GEMINI_API_KEY } from '@/lib/config';
@@ -12,9 +12,7 @@ export function Brain() {
     const streamRef = useRef<MediaStream | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
-
-    const [lastProcessedIndex, setLastProcessedIndex] = useState(0);
-    const [lastAnalyzedText, setLastAnalyzedText] = useState('');
+    const lastAnalyzedTextRef = useRef('');
 
     // 1. Screen Capture Logic
     useEffect(() => {
@@ -98,11 +96,11 @@ export function Brain() {
 
         // Smart Check: If text hasn't changed and no manual context, skip
         const combinedText = newText + manualContext;
-        if (combinedText === lastAnalyzedText && !triggerAI) {
+        if (combinedText === lastAnalyzedTextRef.current && !triggerAI) {
             console.log("Skipping AI analysis - No new context.");
             return;
         }
-        setLastAnalyzedText(combinedText);
+        lastAnalyzedTextRef.current = combinedText;
         isProcessingRef.current = true;
 
         // Capture Frame
@@ -152,7 +150,7 @@ export function Brain() {
             console.log("Triggering AI (No Audio)...");
             await handleAIResponse(null);
         }
-    }, [isRecording, transcript, resumeText, manualContext, suggestions, setSuggestions, appendSuggestion, lastAnalyzedText, triggerAI, userApiKey, addToHistory]);
+    }, [transcript, resumeText, manualContext, suggestions, setSuggestions, appendSuggestion, triggerAI, userApiKey, addToHistory]);
 
     // Auto-trigger every 20 seconds
     useEffect(() => {
@@ -161,15 +159,16 @@ export function Brain() {
         return () => clearInterval(interval);
     }, [isRecording, performAnalysis]);
 
-    // Manual Trigger
-    // Manual Trigger
-    // Manual Trigger
+    // Manual Trigger - using setTimeout to avoid calling setState during render
     const lastTriggerRef = useRef(triggerAI);
     useEffect(() => {
         if (triggerAI > lastTriggerRef.current) {
             lastTriggerRef.current = triggerAI;
             console.log("Manual Trigger Activated!");
-            performAnalysis();
+            // Use setTimeout to schedule the async operation outside the effect
+            setTimeout(() => {
+                performAnalysis();
+            }, 0);
         }
     }, [triggerAI, performAnalysis]);
 
