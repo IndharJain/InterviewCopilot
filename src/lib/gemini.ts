@@ -10,7 +10,7 @@ export async function generateAnswer(
     onChunk: (text: string) => void
 ) {
     if (!apiKey) {
-        onChunk("⚠️ Error: API Key is missing. Please create a .env.local file with NEXT_PUBLIC_GEMINI_API_KEY.");
+        onChunk("⚠️ Error: API Key is missing. Please enter it in the settings.");
         return;
     }
     const genAI = new GoogleGenerativeAI(apiKey);
