@@ -1,31 +1,26 @@
-# Fixing the Netlify Build Error
+# � URGENT: Netlify Environment Variables Still Missing
 
-The error `Error: @clerk/clerk-react: Missing publishableKey` means Netlify cannot find your Clerk API key during the build process.
+The build logs show that the **Clerk Publishable Key is still missing** during the build process.
 
-## 1. Get your Clerk Keys
-1. Go to your [Clerk Dashboard](https://dashboard.clerk.com/).
-2. Select your application.
-3. Go to **API Keys** in the sidebar.
-4. Copy the **Publishable Key** (starts with `pk_...`).
-5. Copy the **Secret Key** (starts with `sk_...`).
+Even though you might have added them, they might not be applied to the **Build** scope or the **Deploy** hasn't picked them up.
 
-## 2. Add to Netlify
-1. Go to your [Netlify Dashboard](https://app.netlify.com/).
-2. Select your `interview-copilot` site.
-3. Click on **Site configuration** (or **Site settings**).
-4. In the sidebar, select **Environment variables**.
-5. Click **Add a variable** -> **Add a single variable**.
-6. Add the Publishable Key:
-   - **Key**: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-   - **Value**: (Paste your `pk_...` key here)
-7. Click **Create variable**.
-8. Repeat for the Secret Key:
-   - **Key**: `CLERK_SECRET_KEY`
-   - **Value**: (Paste your `sk_...` key here)
+## 🛠️ Troubleshooting Steps
 
-## 3. Trigger a New Deploy
-**Crucial Step:** Changing variables does not automatically restart the build.
-1. Go to the **Deploys** tab in Netlify.
-2. Click **Trigger deploy** -> **Clear cache and deploy site**.
+1.  **Verify Variable Names (Check for typos)**
+    *   `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` (Must start with `pk_...`)
+    *   `CLERK_SECRET_KEY` (Must start with `sk_...`)
 
-This should resolve the error!
+2.  **Verify Scope**
+    *   In Netlify -> Site configuration -> Environment variables.
+    *   Click on the variable name.
+    *   Ensure **Scopes** is set to **"All scopes"** (Build, Runtime, etc.).
+
+3.  **Hard Refresh Deploy**
+    *   Go to **Deploys**.
+    *   Click **Trigger deploy** -> **Clear cache and deploy site**.
+
+## ⚠️ If it still fails...
+It is possible the key value itself is invalid or copied with whitespace.
+*   Check the value in Netlify. Make sure there are no spaces at the start or end.
+
+I have updated the code to explicitly look for the key, which might help debug if it's a binding issue.
