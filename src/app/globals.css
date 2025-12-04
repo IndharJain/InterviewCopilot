@@ -1,47 +1,96 @@
 @import "tailwindcss";
 
 :root {
-  /* Premium Matte Dark Palette */
+  /* Premium Matte Dark Palette (Default) */
   --background: #0a0a0a;
   --foreground: #ededed;
-  
+  --muted: #a3a3a3;
+  --card-bg: rgba(0, 0, 0, 0.2);
+
   /* Glass Effect Variables */
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-highlight: rgba(255, 255, 255, 0.05);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
   --glass-blur: 16px;
-  
+
   /* Accent Colors */
-  --accent-primary: #3b82f6; /* Blue */
-  --accent-secondary: #8b5cf6; /* Purple */
+  --accent-primary: #3b82f6;
+  /* Blue */
+  --accent-secondary: #8b5cf6;
+  /* Purple */
   --accent-glow: rgba(59, 130, 246, 0.5);
+
+  /* Input/Surface */
+  --input-bg: rgba(0, 0, 0, 0.4);
+  --input-border: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='light'] {
+  /* Premium Matte Light Palette */
+  --background: #f2f2f7;
+  /* Apple-like light gray */
+  --foreground: #1d1d1f;
+  --muted: #6e6e73;
+  --card-bg: rgba(255, 255, 255, 0.6);
+
+  /* Glass Effect Variables (Light) */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  /* Frosted white */
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+  --glass-blur: 20px;
+
+  /* Accent Colors */
+  --accent-primary: #0071e3;
+  --accent-secondary: #5e5ce6;
+  --accent-glow: rgba(0, 113, 227, 0.2);
+
+  /* Input/Surface */
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-border: rgba(0, 0, 0, 0.1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
+
   /* Custom Utilities */
   --color-glass-bg: var(--glass-bg);
   --color-glass-border: var(--glass-border);
   --shadow-glass: var(--glass-shadow);
   --backdrop-blur-glass: var(--glass-blur);
+  --color-input-bg: var(--input-bg);
+  --color-input-border: var(--input-border);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-card-bg: var(--card-bg);
+  --color-glass-highlight: var(--glass-highlight);
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
-  
-  /* Subtle ambient background */
-  background-image: 
+
+  /* Subtle ambient background - Default Dark */
+  background-image:
     radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
     radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
   background-attachment: fixed;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme='light'] body {
+  /* Subtle ambient background - Light */
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(0, 113, 227, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(94, 92, 230, 0.05) 0%, transparent 50%);
 }
 
 /* Glass Utility Class */
@@ -51,10 +100,11 @@ body {
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: color-mix(in srgb, var(--foreground), transparent 90%);
   background: var(--glass-highlight);
 }
 
@@ -69,16 +119,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(128, 128, 128, 0.2);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(128, 128, 128, 0.4);
 }
 
 /* Selection Color */
 ::selection {
-  background: rgba(59, 130, 246, 0.3);
+  background: var(--accent-primary);
   color: white;
 }

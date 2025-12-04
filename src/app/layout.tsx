@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Interview Copilot | AI Interview Assistant",
   description: "Your real-time AI assistant for technical interviews. Ace your next job interview with smart, context-aware suggestions.",
+  icons: {
+    icon: '/ICB.jpg',
+  },
 };
 
 import { ClerkProvider } from "@clerk/nextjs";

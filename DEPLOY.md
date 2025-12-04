@@ -38,6 +38,10 @@ This guide will help you deploy **Interview Copilot** to **Netlify**.
     *   Click **"Add environment variables"**.
     *   Key: `NEXT_PUBLIC_GEMINI_API_KEY`
     *   Value: `your_actual_api_key_starting_with_AIza...`
+    *   Key: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+    *   Value: `pk_test_...` (Found in your Clerk Dashboard)
+    *   Key: `CLERK_SECRET_KEY`
+    *   Value: `sk_test_...` (Found in your Clerk Dashboard)
 7.  Click **Deploy**.
 
 ## Step 3: Verification

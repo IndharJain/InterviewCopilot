@@ -20,7 +20,7 @@ export function Tooltip({ children, content, position = 'bottom' }: TooltipProps
 
             <div
                 className={clsx(
-                    "absolute z-50 px-3 py-1.5 text-xs font-medium text-white bg-neutral-900/90 border border-white/10 rounded-lg shadow-xl backdrop-blur-md whitespace-nowrap transition-all duration-200 pointer-events-none",
+                    "absolute z-50 px-3 py-1.5 text-xs font-medium text-foreground glass-panel rounded-lg whitespace-nowrap transition-all duration-200 pointer-events-none",
                     isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95",
                     position === 'bottom' && "top-full mt-2 left-1/2 -translate-x-1/2 origin-top",
                     position === 'top' && "bottom-full mb-2 left-1/2 -translate-x-1/2 origin-bottom",
