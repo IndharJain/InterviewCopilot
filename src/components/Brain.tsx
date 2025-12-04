@@ -85,10 +85,8 @@ export function Brain() {
             return;
         }
 
-        // Use user-provided API key or environment variable as fallback
-        const effectiveApiKey = userApiKey || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-
-        if (!effectiveApiKey) {
+        // Use only user-provided API key
+        if (!userApiKey) {
             console.warn("No API Key available");
             appendSuggestion("⚠️ Please enter your Gemini API Key to start.");
             return;
@@ -135,7 +133,7 @@ export function Brain() {
             setSuggestions(''); // Clear for new stream
             useStore.getState().setIsStreaming(true);
 
-            await generateAnswer(effectiveApiKey, newText, imageBase64, audioBase64, resumeText, manualContext, (chunk: string) => {
+            await generateAnswer(userApiKey, newText, imageBase64, audioBase64, resumeText, manualContext, (chunk: string) => {
                 appendSuggestion(chunk);
             });
             useStore.getState().setIsStreaming(false);
