@@ -6,7 +6,6 @@ This guide will help you deploy **Interview Copilot** to **GitHub Pages**.
 
 1.  A [GitHub](https://github.com/) account.
 2.  Your Google Gemini API Key.
-3.  Your Clerk API Keys (Publishable Key and Secret Key).
 
 ---
 
@@ -25,8 +24,6 @@ Go to your repository **Settings** > **Secrets and variables** > **Actions** and
 
 | Secret Name | Description |
 |------------|-------------|
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Your Clerk publishable key (starts with `pk_`) |
-| `CLERK_SECRET_KEY` | Your Clerk secret key (starts with `sk_`) |
 | `NEXT_PUBLIC_GEMINI_API_KEY` | Your Google Gemini API key |
 
 ### Step 3: Push and Deploy
