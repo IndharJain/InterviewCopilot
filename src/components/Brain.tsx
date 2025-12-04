@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useStore } from '@/lib/store';
 import { generateAnswer } from '@/lib/gemini';
+import { DEFAULT_GEMINI_API_KEY } from '@/lib/config';
 
 export function Brain() {
     const { isRecording, transcript, suggestions, setSuggestions, appendSuggestion, resumeText, manualContext, triggerAI, userApiKey, addToHistory } = useStore();
@@ -85,12 +86,8 @@ export function Brain() {
             return;
         }
 
-        // Use only user-provided API key
-        if (!userApiKey) {
-            console.warn("No API Key available");
-            appendSuggestion("⚠️ Please enter your Gemini API Key to start.");
-            return;
-        }
+        // Use user-provided API key or default fallback
+        const effectiveApiKey = userApiKey || DEFAULT_GEMINI_API_KEY;
 
         // Removed isRecording check to allow manual triggers without screen share
 
@@ -133,7 +130,7 @@ export function Brain() {
             setSuggestions(''); // Clear for new stream
             useStore.getState().setIsStreaming(true);
 
-            await generateAnswer(userApiKey, newText, imageBase64, audioBase64, resumeText, manualContext, (chunk: string) => {
+            await generateAnswer(effectiveApiKey, newText, imageBase64, audioBase64, resumeText, manualContext, (chunk: string) => {
                 appendSuggestion(chunk);
             });
             useStore.getState().setIsStreaming(false);
