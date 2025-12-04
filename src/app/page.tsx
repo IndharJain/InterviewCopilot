@@ -9,7 +9,7 @@ import { Brain } from '@/components/Brain';
 import { useStore } from '@/lib/store';
 import { extractTextFromPDF } from '@/lib/pdf-parser';
 import { Tooltip } from '@/components/Tooltip';
-import { Mic, MicOff, Play, Square, Cpu, Sparkles, MessageSquareText, Bot, Settings, Menu, Copy, Check, Sun, Moon } from 'lucide-react';
+import { Play, Square, Cpu, Sparkles, MessageSquareText, Bot, Copy, Check, Sun, Moon } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import clsx from 'clsx';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -17,7 +17,13 @@ import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 // Custom Code Block Renderer
 // Custom Code Block Renderer
-const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
+interface CodeBlockProps {
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+const CodeBlock = ({ inline, className, children, ...props }: CodeBlockProps) => {
   const match = /language-(\w+)/.exec(className || '');
   const [isCopied, setIsCopied] = useState(false);
   const codeText = String(children).replace(/\n$/, '');
