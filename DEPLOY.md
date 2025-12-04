@@ -7,8 +7,51 @@ This guide will help you deploy **Interview Copilot** to **Netlify**.
 1.  A [GitHub](https://github.com/) account.
 2.  A [Netlify](https://www.netlify.com/) account.
 3.  Your Google Gemini API Key.
+4.  Your Clerk API Keys (Publishable Key and Secret Key).
 
-## Step 1: Push to GitHub
+## Deployment Options
+
+You can deploy in two ways:
+1. **Automatic CI/CD** (Recommended): Using GitHub Actions workflows
+2. **Manual Netlify Integration**: Direct Netlify + GitHub connection
+
+---
+
+## Option 1: GitHub Actions CI/CD (Recommended)
+
+This repository includes GitHub Actions workflows for continuous integration and deployment.
+
+### Step 1: Configure GitHub Secrets
+
+Go to your repository **Settings** > **Secrets and variables** > **Actions** and add:
+
+| Secret Name | Description |
+|------------|-------------|
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Your Clerk publishable key (starts with `pk_`) |
+| `CLERK_SECRET_KEY` | Your Clerk secret key (starts with `sk_`) |
+| `NEXT_PUBLIC_GEMINI_API_KEY` | Your Google Gemini API key |
+| `NETLIFY_AUTH_TOKEN` | Your Netlify personal access token |
+| `NETLIFY_SITE_ID` | Your Netlify site ID |
+
+### Step 2: Get Netlify Credentials
+
+1. **Netlify Auth Token**: Go to [Netlify User Settings](https://app.netlify.com/user/applications) > **Personal access tokens** > **New access token**
+2. **Netlify Site ID**: Create a new site in Netlify, then find it in **Site settings** > **General** > **Site ID**
+
+### Step 3: Push and Deploy
+
+Push to the `main` branch and the deployment will happen automatically!
+
+The CI workflow will:
+- Run linting
+- Build the application
+- Deploy to Netlify on successful builds
+
+---
+
+## Option 2: Manual Netlify Integration
+
+### Step 1: Push to GitHub
 
 1.  Initialize git if you haven't already:
     ```bash
@@ -24,7 +67,7 @@ This guide will help you deploy **Interview Copilot** to **Netlify**.
     git push -u origin main
     ```
 
-## Step 2: Deploy on Netlify
+### Step 2: Deploy on Netlify
 
 1.  Log in to your [Netlify Dashboard](https://app.netlify.com/).
 2.  Click **"Add new site"** -> **"Import from existing project"**.
