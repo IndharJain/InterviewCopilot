@@ -1,10 +1,10 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI("AIzaSyA6x6FdamhyA-haaKcDI5qUoEsZDaRwdys");
 
 async function run() {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         // There isn't a direct "listModels" on the client instance in some versions, 
         // but let's try to just generate content with a known fallback or use the model manager if available.
         // Actually, the SDK usually has a ModelManager.

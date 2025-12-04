@@ -38,7 +38,7 @@ export async function generateAnswer(
     ${transcript}
 `;
 
-    const parts: any[] = [prompt];
+    const parts: (string | { inlineData: { data: string; mimeType: string } })[] = [prompt];
 
     if (imageBase64) {
         const base64Data = imageBase64.split(',')[1] || imageBase64;
@@ -66,7 +66,7 @@ export async function generateAnswer(
             const chunkText = chunk.text();
             onChunk(chunkText);
         }
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Gemini API Error:', error);
 
         // Clear previous partial response if any, to show just the error
@@ -74,10 +74,11 @@ export async function generateAnswer(
         // but typically we just append. Ideally, the UI handles this. 
         // For now, we'll just send a distinct error block.
 
-        if (error.message.includes('429') || error.message.includes('Quota exceeded')) {
+        const errorMessage = error instanceof Error ? error.message : 'Something went wrong.';
+        if (errorMessage.includes('429') || errorMessage.includes('Quota exceeded')) {
             onChunk('\n\n**⚠️ API Rate Limit Reached**\n\nPlease wait a moment before trying again. The free tier has limits.');
         } else {
-            onChunk(`\n\n**⚠️ Error:** ${error.message || 'Something went wrong.'}`);
+            onChunk(`\n\n**⚠️ Error:** ${errorMessage}`);
         }
     }
 }

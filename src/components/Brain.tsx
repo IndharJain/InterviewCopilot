@@ -14,7 +14,6 @@ export function Brain() {
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
 
-    const [lastProcessedIndex, setLastProcessedIndex] = useState(0);
     const [lastAnalyzedText, setLastAnalyzedText] = useState('');
 
     // 1. Screen Capture Logic
@@ -169,7 +168,7 @@ export function Brain() {
             console.log("Triggering AI (No Audio)...");
             await handleAIResponse(null);
         }
-    }, [isRecording, transcript, resumeText, manualContext, suggestions, setSuggestions, appendSuggestion, lastAnalyzedText, triggerAI, user, userApiKey, addToHistory]);
+    }, [transcript, resumeText, manualContext, suggestions, setSuggestions, appendSuggestion, lastAnalyzedText, triggerAI, user, userApiKey, addToHistory]);
 
     // Auto-trigger every 20 seconds
     useEffect(() => {
@@ -186,7 +185,10 @@ export function Brain() {
         if (triggerAI > lastTriggerRef.current) {
             lastTriggerRef.current = triggerAI;
             console.log("Manual Trigger Activated!");
-            performAnalysis();
+            // Defer the analysis to avoid calling setState synchronously in useEffect
+            queueMicrotask(() => {
+                performAnalysis();
+            });
         }
     }, [triggerAI, performAnalysis]);
 
